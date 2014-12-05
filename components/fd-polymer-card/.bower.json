@@ -1,0 +1,41 @@
+{
+  "name": "fd-polymer-card",
+  "keywords": [
+    "freedomotic",
+    "seed",
+    "polymer",
+    "web-components"
+  ],
+  "main": "fd-polymer-card.html",
+  "dependencies": {
+    "polymer": "Polymer/polymer#^0.5.1"
+  },
+  "devDependencies": {
+    "polymer-test-tools": "Polymer/polymer-test-tools#^0.5.0"
+  },
+  "authors": [
+    "Matteo Mazzoni <matteo@bestmazzo.it>",
+    "Niko Zarzani <niko.zarzani@nautes.com>"
+  ],
+  "description": "Element providing a generic card",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "../",
+    "test",
+    "tests"
+  ],
+  "homepage": "https://github.com/freedomotic/fd-polymer-card",
+  "_release": "0eac78bcb0",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "0eac78bcb0dfc4ed85ba86452ba0bd8b6d91165c"
+  },
+  "_source": "git://github.com/freedomotic/fd-polymer-card.git",
+  "_target": "master",
+  "_originalSource": "freedomotic/fd-polymer-card",
+  "_direct": true
+}

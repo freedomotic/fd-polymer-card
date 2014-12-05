@@ -1,0 +1,7 @@
+{
+  "name": "fd-polymer-card#gh-pages",
+  "private": true,
+  "dependencies": {
+    "fd-polymer-card": "freedomotic/fd-polymer-card#master"
+  }
+}

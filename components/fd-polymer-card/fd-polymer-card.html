@@ -1,0 +1,206 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-shadow/paper-shadow.html">
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../paper-dialog/paper-dialog.html">
+<link rel="import" href="../paper-dialog/paper-action-dialog.html">
+<!--
+Element providing a generic card
+
+##### Example
+
+    <fd-card></fd-card>
+
+@element fd-card
+@blurb Element providing a generic card
+@status beta
+@homepage http://freedomotic.github.io/fd-polymer-card
+-->
+<polymer-element name="fd-card" attributes="mode">
+
+  <template>
+     <style>
+    :host {
+      display: block;
+      position: relative;
+      font-size: 1.2rem;
+      font-weight: 300;
+      font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
+    }
+    .thing-container {
+      margin-bottom: 10px;
+      border-radius: 20px;
+    }
+    .card{
+      width: 290px;
+      min-height: 250px;
+    }
+    .list{
+      width: 500px;
+      min-height: 100px;
+    }
+
+    .thing-subheader {
+      margin: 0px 10px;
+    }
+    .thing-actionbar{
+      margin: 5px;
+    }
+    #icon-list{
+      border-top-left-radius: 20px;
+      border-bottom-left-radius: 20px;
+      background-color: #8bae2d;
+      padding: 0 5px;
+      height: 111px;
+    }
+    #extra{
+      font-size: 0.8rem;
+      padding: 5px;
+    }
+    #icon-card{
+      border-top-left-radius: 20px;
+      border-bottom-right-radius: 20px;
+      background-color: #8bae2d;
+      padding: 5px;
+    }
+    h2 {
+      margin: 5px 0px;
+    }
+    paper-icon-button{
+      color: #999;
+    }
+    paper-icon-button:hover{
+      color: #555;
+    }
+    </style>
+
+<paper-action-dialog backdrop autoCloseDisabled id="moddialog">
+  <content select="modify"></content>
+  <paper-button affirmative autofocus>Tap me to close</paper-button>
+</paper-action-dialog>  
+
+<template if="{{ mode==='card' }}">
+<paper-shadow animated z="1" class="thing-container card">
+  <div layout vertical start>
+  <div layout horizontal self-stretch>
+ <div id="icon-card" ><content select="icon"></content></div>
+  <div layout vertical flex self-stretch>
+
+    <div layout horizontal reverse class="thing-actionbar">
+       <paper-icon-button icon="settings-input-composite" on-tap="{{ toggleExtra }}"></paper-icon-button>
+       <paper-icon-button icon="view-list" on-tap="{{ toggleCard }}"></paper-icon-button>
+       <paper-icon-button icon="settings-power" on-tap="{{ tapObject }}"></paper-icon-button>
+       <paper-icon-button icon="settings" on-tap="{{ toggleDialog }}" transition="core-transition-center"></paper-icon-button>
+    </div>
+  </div>
+  </div>
+  <div layout vertical self-stretch class="thing-subheader">
+    <h2><content select="name"></content></h2>
+    <small><content select="description"></content></small>
+    <template if="{{extra}}">
+      <div self-stretch id="extra"><content select="extra"></content></div>
+    </template> 
+  </div>
+ </div>
+ </paper-shadow>
+ </template>
+
+<template if="{{ mode==='list'}}">
+<paper-shadow animated z="1" class="thing-container list">
+  <div layout vertical start>
+    <div layout horizontal start>
+    <div id="icon-list" ><content select="icon"></content></div>
+    <div layout vertical flex self-stretch class="thing-subheader">
+      <h2><content select="name"></content></h2>
+      <small><content select="description"></content></small>
+      <div layout horizontal reverse class="thing-actionbar">
+        <paper-icon-button icon="settings-input-composite" on-tap="{{ toggleExtra }}"></paper-icon-button>
+        <paper-icon-button icon="view-module" on-tap="{{ toggleCard }}"></paper-icon-button>
+        <paper-icon-button icon="settings-power" on-tap="{{ tapObject }}"></paper-icon-button>
+        <paper-icon-button icon="settings" on-tap="{{ toggleDialog }}" transition="core-transition-center"></paper-icon-button>
+      </div>
+    </div>
+  </div>
+  <template if="{{extra}}">
+    <div self-stretch id="extra"><content select="extra"></content></div>
+  </template> 
+</div>
+ </paper-shadow>
+ </template>
+  
+
+  <template if="{{ mode==='matCard' }}">
+<paper-shadow animated z="1" class="card">
+  <div  layout vertical center >
+    <div self-stretch style="background-color: #8bae2d; text-align:center;">
+      <content select="icon"></content>
+      <h3 style="color:white;"><content select="name"></content></h3>
+    </div>
+    <content select="description"></content>
+    <template if="{{extra}}">
+      <div self-stretch id="extra"><content select="extra"></content></div>
+    </template> 
+    <div layout horizontal reverse class="thing-actionbar">
+       <paper-icon-button icon="settings-input-composite" on-tap="{{ toggleExtra }}"></paper-icon-button>
+       <template if="{{switchMode}}"><paper-icon-button icon="view-module" on-tap="{{ toggleCard }}"></paper-icon-button></template>
+       <paper-icon-button icon="settings-power" on-tap="{{ tapObject }}"></paper-icon-button>
+       <paper-icon-button icon="settings" on-tap="{{ toggleDialog }}" transition="core-transition-center"></paper-icon-button>
+    </div>
+  </div>
+  </paper-shadow>
+ </template>
+  </template>
+  <script>
+    Polymer("fd-card", {
+           /**
+       * The 'mode' lets you choose card's layout
+       *  options are:
+       *  "card" - box with icon on the up-left corner, actions on up-right
+       *  "matCard" - box with icon and title on top (as usual in material design)
+       *  "list" - long box with icons and other information in row
+       * @attribute mode
+       * @type String
+       */
+      mode: 'matCard',
+
+     /**
+       * The 'extra' attribute lets user hide or show the extra action bar
+       *
+       * @attribute extra
+       * @type boolean
+       */
+      extra: false,
+
+     /**
+       * The 'switchMode' attribute shows or hides the mode-switch button
+       *
+       * @attribute switchMode
+       * @type boolean
+       */
+       switchMode: true,
+      tapObject: function(event){
+        this.fire("icon-tap",event);
+      },
+      toggleCard: function(){
+        switch (this.mode){
+          case 'card':
+            this.mode='list';
+            break;
+          case 'list':
+            this.mode='matCard';
+            break;
+          case 'matCard':
+            this.mode='card';
+            break;
+        }
+      },
+      toggleExtra: function(){
+        this.extra = ! this.extra;
+      },
+      toggleDialog: function(){
+        this.$.moddialog.toggle();
+      }
+    });
+
+  </script>
+
+</polymer-element>
