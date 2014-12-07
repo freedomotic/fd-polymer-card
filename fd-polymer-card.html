@@ -1,5 +1,6 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../paper-shadow/paper-shadow.html">
+<link rel="import" href="../paper-button/paper-button.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../paper-dialog/paper-dialog.html">
 <link rel="import" href="../paper-dialog/paper-action-dialog.html">
@@ -68,6 +69,10 @@ Element providing a generic card
     paper-icon-button{
       color: #999;
     }
+    paper-icon-button /deep/ core-icon[role=icon] {
+      width: 40px;
+      height: 40px;
+    }
     paper-icon-button:hover{
       color: #555;
     }
@@ -75,7 +80,8 @@ Element providing a generic card
 
 <paper-action-dialog backdrop autoCloseDisabled id="moddialog">
   <content select="modify"></content>
-  <paper-button affirmative autofocus>Tap me to close</paper-button>
+  <paper-button affirmative raised style="color:white;background-color:#8bae2d;<" on-tap="{{ saveItem }}">{{ 'save' | translate }}</paper-button>
+  <paper-button dismissive style="color:red;">{{ 'close' | translate }}</paper-button>
 </paper-action-dialog>  
 
 <template if="{{ mode==='card' }}">
@@ -141,7 +147,7 @@ Element providing a generic card
     </template> 
     <div layout horizontal reverse class="thing-actionbar">
        <paper-icon-button icon="settings-input-composite" on-tap="{{ toggleExtra }}"></paper-icon-button>
-       <template if="{{switchMode}}"><paper-icon-button icon="view-module" on-tap="{{ toggleCard }}"></paper-icon-button></template>
+       <paper-icon-button icon="view-module" on-tap="{{ toggleCard }}"></paper-icon-button>
        <paper-icon-button icon="settings-power" on-tap="{{ tapObject }}"></paper-icon-button>
        <paper-icon-button icon="settings" on-tap="{{ toggleDialog }}" transition="core-transition-center"></paper-icon-button>
     </div>
@@ -151,32 +157,8 @@ Element providing a generic card
   </template>
   <script>
     Polymer("fd-card", {
-           /**
-       * The 'mode' lets you choose card's layout
-       *  options are:
-       *  "card" - box with icon on the up-left corner, actions on up-right
-       *  "matCard" - box with icon and title on top (as usual in material design)
-       *  "list" - long box with icons and other information in row
-       * @attribute mode
-       * @type String
-       */
       mode: 'matCard',
-
-     /**
-       * The 'extra' attribute lets user hide or show the extra action bar
-       *
-       * @attribute extra
-       * @type boolean
-       */
       extra: false,
-
-     /**
-       * The 'switchMode' attribute shows or hides the mode-switch button
-       *
-       * @attribute switchMode
-       * @type boolean
-       */
-       switchMode: true,
       tapObject: function(event){
         this.fire("icon-tap",event);
       },
@@ -198,6 +180,9 @@ Element providing a generic card
       },
       toggleDialog: function(){
         this.$.moddialog.toggle();
+      },
+      saveItem: function(evt){
+        this.fire("save-item", evt);
       }
     });
 
