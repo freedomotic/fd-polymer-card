@@ -27,6 +27,9 @@ Element providing a generic card
       font-weight: 300;
       font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
     }
+    .row{
+      min-width: 100%;
+    }
     .thing-container {
       margin-bottom: 10px;
       border-radius: 20px;
@@ -35,11 +38,20 @@ Element providing a generic card
       width: 290px;
       min-height: 250px;
     }
+    .chip{
+      width: 250px;
+      min-height: 150px;
+    }
     .list{
       width: 500px;
       min-height: 100px;
     }
-
+    .row{
+      width:100%;
+      font-size: 0.8rem;
+      font-weight: 50;
+      color: #999;
+    }
     .thing-subheader {
       margin: 0px 10px;
     }
@@ -73,6 +85,10 @@ Element providing a generic card
       width: 40px;
       height: 40px;
     }
+    paper-icon-button.mini /deep/ core-icon[role=icon] {
+      width: 20px;
+      height: 20px;
+    }
     paper-icon-button:hover{
       color: #555;
     }
@@ -85,57 +101,55 @@ Element providing a generic card
 </paper-action-dialog>  
 
 <template if="{{ mode==='card' }}">
-<paper-shadow animated z="1" class="thing-container card">
+  <paper-shadow animated z="1" class="thing-container card">
   <div layout vertical start>
-  <div layout horizontal self-stretch>
- <div id="icon-card" ><content select="icon"></content></div>
-  <div layout vertical flex self-stretch>
-
-    <div layout horizontal reverse class="thing-actionbar">
-       <paper-icon-button icon="settings-input-composite" on-tap="{{ toggleExtra }}"></paper-icon-button>
-       <paper-icon-button icon="view-list" on-tap="{{ toggleCard }}"></paper-icon-button>
-       <paper-icon-button icon="settings-power" on-tap="{{ tapObject }}"></paper-icon-button>
-       <paper-icon-button icon="settings" on-tap="{{ toggleDialog }}" transition="core-transition-center"></paper-icon-button>
+    <div layout horizontal self-stretch>
+     <div id="icon-card" ><content select="icon"></content></div>
+     <div layout vertical flex self-stretch>
+      <div layout horizontal end  reverse class="thing-actionbar">
+       <paper-icon-button class="mini" icon="settings-input-composite" on-tap="{{ toggleExtra }}"></paper-icon-button>
+       <paper-icon-button class="mini" icon="view-list" on-tap="{{ toggleCard }}"></paper-icon-button>
+       <paper-icon-button class="mini" icon="settings-power" on-tap="{{ tapObject }}"></paper-icon-button>
+       <paper-icon-button class="mini" icon="settings" on-tap="{{ toggleDialog }}" transition="core-transition-center"></paper-icon-button>
+     </div>
     </div>
-  </div>
-  </div>
-  <div layout vertical self-stretch class="thing-subheader">
+   </div>
+   <div layout vertical self-stretch class="thing-subheader">
     <h2><content select="name"></content></h2>
     <small><content select="description"></content></small>
     <template if="{{extra}}">
       <div self-stretch id="extra"><content select="extra"></content></div>
     </template> 
+   </div>
   </div>
- </div>
  </paper-shadow>
- </template>
+</template>
 
 <template if="{{ mode==='list'}}">
-<paper-shadow animated z="1" class="thing-container list">
-  <div layout vertical start>
-    <div layout horizontal start>
-    <div id="icon-list" ><content select="icon"></content></div>
-    <div layout vertical flex self-stretch class="thing-subheader">
-      <h2><content select="name"></content></h2>
-      <small><content select="description"></content></small>
-      <div layout horizontal reverse class="thing-actionbar">
-        <paper-icon-button icon="settings-input-composite" on-tap="{{ toggleExtra }}"></paper-icon-button>
-        <paper-icon-button icon="view-module" on-tap="{{ toggleCard }}"></paper-icon-button>
-        <paper-icon-button icon="settings-power" on-tap="{{ tapObject }}"></paper-icon-button>
-        <paper-icon-button icon="settings" on-tap="{{ toggleDialog }}" transition="core-transition-center"></paper-icon-button>
+  <paper-shadow animated z="1" class="thing-container list">
+  <div layout vertical >
+    <div layout horizontal >
+      <div id="icon-list" ><content select="icon"></content></div>
+      <div layout vertical flex self-stretch class="thing-subheader">
+        <h2><content select="name"></content></h2>
+        <small><content select="description"></content></small>
+        <div layout horizontal end reverse class="thing-actionbar">
+          <paper-icon-button icon="settings-input-composite" on-tap="{{ toggleExtra }}"></paper-icon-button>
+          <paper-icon-button icon="view-module" on-tap="{{ toggleCard }}"></paper-icon-button>
+          <paper-icon-button icon="settings-power" on-tap="{{ tapObject }}"></paper-icon-button>
+          <paper-icon-button icon="settings" on-tap="{{ toggleDialog }}" transition="core-transition-center"></paper-icon-button>
+        </div>
       </div>
+     </div>
+     <template if="{{extra}}">
+      <div self-stretch id="extra"><content select="extra"></content></div>
+     </template> 
     </div>
-  </div>
-  <template if="{{extra}}">
-    <div self-stretch id="extra"><content select="extra"></content></div>
-  </template> 
-</div>
- </paper-shadow>
- </template>
-  
+  </paper-shadow>
+</template>
 
-  <template if="{{ mode==='matCard' }}">
-<paper-shadow animated z="1" class="card">
+<template if="{{ mode==='matCard' }}">
+  <paper-shadow animated z="1" class="card">
   <div  layout vertical center >
     <div self-stretch style="background-color: #8bae2d; text-align:center;">
       <content select="icon"></content>
@@ -146,18 +160,56 @@ Element providing a generic card
       <div self-stretch id="extra"><content select="extra"></content></div>
     </template> 
     <div layout horizontal reverse class="thing-actionbar">
+     <paper-icon-button icon="settings-input-composite" on-tap="{{ toggleExtra }}"></paper-icon-button>
+     <paper-icon-button icon="view-module" on-tap="{{ toggleCard }}"></paper-icon-button>
+     <paper-icon-button icon="settings-power" on-tap="{{ tapObject }}"></paper-icon-button>
+     <paper-icon-button icon="settings" on-tap="{{ toggleDialog }}" transition="core-transition-center"></paper-icon-button>
+   </div>
+  </div>
+ </paper-shadow>
+</template>
+
+<template if="{{ mode==='row' }}">
+  <div  layout horizontal self-stretch justified class="row">
+    <div ><content select="name"></content></div>
+    <div ><content select="description"></content></div>
+    <div </div>
+    <div  layout horizontal>
+     <paper-icon-button icon="settings-input-composite" on-tap="{{ toggleExtra }}"></paper-icon-button>
+     <paper-icon-button icon="view-module" on-tap="{{ toggleCard }}"></paper-icon-button>
+     <paper-icon-button icon="settings-power" on-tap="{{ tapObject }}"></paper-icon-button>
+     <paper-icon-button icon="settings" on-tap="{{ toggleDialog }}" transition="core-transition-center"></paper-icon-button>
+     </div>
+   </div>
+</template>
+
+<template if="{{ mode==='chip' }}">
+  <paper-shadow animated z="1" class="chip">
+  <div layout vertical>
+  <div  layout horizontal start style="color:white;background-color: rgba(50, 50, 50, 0.9); text-align:center;">
+    <div layout vertical flex center >
+      <content select="icon"></content>
+      <div><content select="name"></content></div>
+      <small><content select="description"></content></small>
+    </div>
+    <div layout end vertical reverse class="thing-actionbar">
        <paper-icon-button icon="settings-input-composite" on-tap="{{ toggleExtra }}"></paper-icon-button>
        <paper-icon-button icon="view-module" on-tap="{{ toggleCard }}"></paper-icon-button>
        <paper-icon-button icon="settings-power" on-tap="{{ tapObject }}"></paper-icon-button>
-       <paper-icon-button icon="settings" on-tap="{{ toggleDialog }}" transition="core-transition-center"></paper-icon-button>
+      <paper-icon-button icon="settings" on-tap="{{ toggleDialog }}" transition="core-transition-center"></paper-icon-button>
     </div>
   </div>
-  </paper-shadow>
- </template>
-  </template>
+  <template if="{{extra}}">
+      <div self-stretch id="extra"><content select="extra"></content></div>
+    </template>     
+  </div>
+ </paper-shadow>
+</template>
+
+</template>
   <script>
     Polymer("fd-card", {
-      mode: 'matCard',
+      mode: 'list',
       extra: false,
       tapObject: function(event){
         this.fire("icon-tap",event);
@@ -171,6 +223,12 @@ Element providing a generic card
             this.mode='matCard';
             break;
           case 'matCard':
+            this.mode='row';
+            break;
+          case 'row':
+            this.mode='chip';
+            break;
+          case 'chip':
             this.mode='card';
             break;
         }
