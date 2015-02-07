@@ -16,7 +16,7 @@ Element providing a generic card
 @status beta
 @homepage http://freedomotic.github.io/fd-polymer-card
 -->
-<polymer-element name="fd-card" attributes="mode enextra ensettings eneoggle enehape">
+<polymer-element name="fd-card" attributes="mode enextra ensettings entoggle enshape">
 
   <template>
     <style>
@@ -65,9 +65,10 @@ Element providing a generic card
         padding: 0 5px;
         height: 111px;
       }
-      #extra {
+      .extra {
         font-size: 0.8rem;
         padding: 5px;
+        background-color: rgba(200, 200, 200, 0.8);
       }
       #icon-card {
         border-top-left-radius: 20px;
@@ -93,14 +94,33 @@ Element providing a generic card
       paper-icon-button:hover {
         color: #555;
       }
+      #moddialog{
+        min-width:200px;
+      }
     </style>
 
-    <paper-action-dialog backdrop autoCloseDisabled id="moddialog">
+    <paper-action-dialog backdrop id="moddialog">
       <content select="modify"></content>
       <paper-button affirmative raised style="color:white;background-color:#8bae2d;<" on-tap="{{ saveItem }}">{{ 'save' | translate }}</paper-button>
       <paper-button dismissive style="color:red;">{{ 'close' | translate }}</paper-button>
     </paper-action-dialog>
 
+    <template id="baseButtons">
+      <template if="{{enextra}}">
+        <paper-icon-button class="mini" icon="settings-input-composite" on-tap="{{ toggleExtra }}"></paper-icon-button>
+      </template>
+      <template if="{{enshape}}">
+        <paper-icon-button class="mini" icon="view-list" on-tap="{{ toggleCard }}"></paper-icon-button>
+      </template>
+      <template if="{{entoggle}}">
+        <paper-icon-button class="mini" icon="settings-power" on-tap="{{ tapObject }}"></paper-icon-button>
+      </template>
+      <template if="{{ensettings}}">
+        <paper-icon-button class="mini" icon="settings" on-tap="{{ toggleDialog }}" transition="core-transition-center"></paper-icon-button>
+      </template>
+    </template>
+
+    <!-- card -->
     <template if="{{ mode==='card' }}">
       <paper-shadow animated z="1" class="thing-container card">
         <div layout vertical start>
@@ -110,18 +130,7 @@ Element providing a generic card
             </div>
             <div layout vertical flex self-stretch>
               <div layout horizontal end reverse class="thing-actionbar">
-                <template if="{{enextra}}">
-                  <paper-icon-button class="mini" icon="settings-input-composite" on-tap="{{ toggleExtra }}"></paper-icon-button>
-                </template>
-                <template if="{{enshape}}">
-                  <paper-icon-button class="mini" icon="view-list" on-tap="{{ toggleCard }}"></paper-icon-button>
-                </template>
-                <template if="{{entoggle}}">
-                  <paper-icon-button class="mini" icon="settings-power" on-tap="{{ tapObject }}"></paper-icon-button>
-                </template>
-                <template if="{{ensettings}}">
-                  <paper-icon-button class="mini" icon="settings" on-tap="{{ toggleDialog }}" transition="core-transition-center"></paper-icon-button>
-                </template>
+                <template ref="baseButtons" bind></template>
                 <content select="buttons"></content>
               </div>
             </div>
@@ -130,7 +139,7 @@ Element providing a generic card
             <h2><content select="name"></content></h2>
             <small><content select="description"></content></small>
             <template if="{{extra}}">
-              <div self-stretch id="extra">
+              <div class="extra">
                 <content select="extra"></content>
               </div>
             </template>
@@ -138,6 +147,8 @@ Element providing a generic card
         </div>
       </paper-shadow>
     </template>
+
+    <!-- list -->
     <template if="{{ mode==='list'}}">
       <paper-shadow animated z="1" class="thing-container list">
         <div layout vertical>
@@ -149,30 +160,21 @@ Element providing a generic card
               <h2><content select="name"></content></h2>
               <small><content select="description"></content></small>
               <div layout horizontal end reverse class="thing-actionbar">
-                <template if="{{enextra}}">
-                  <paper-icon-button class="mini" icon="settings-input-composite" on-tap="{{ toggleExtra }}"></paper-icon-button>
-                </template>
-                <template if="{{enshape}}">
-                  <paper-icon-button class="mini" icon="view-list" on-tap="{{ toggleCard }}"></paper-icon-button>
-                </template>
-                <template if="{{entoggle}}">
-                  <paper-icon-button class="mini" icon="settings-power" on-tap="{{ tapObject }}"></paper-icon-button>
-                </template>
-                <template if="{{ensettings}}">
-                  <paper-icon-button class="mini" icon="settings" on-tap="{{ toggleDialog }}" transition="core-transition-center"></paper-icon-button>
-                </template>
+                <template ref="baseButtons" bind></template>
                 <content select="buttons"></content>
               </div>
             </div>
           </div>
           <template if="{{extra}}">
-            <div self-stretch id="extra">
+            <div class="extra">
               <content select="extra"></content>
             </div>
           </template>
         </div>
       </paper-shadow>
     </template>
+
+    <!-- matcard -->
     <template if="{{ mode==='matCard' }}">
       <paper-shadow animated z="1" class="card">
         <div layout vertical center>
@@ -182,29 +184,19 @@ Element providing a generic card
           </div>
           <content select="description"></content>
           <template if="{{extra}}">
-            <div self-stretch id="extra">
+            <div class="extra">
               <content select="extra"></content>
             </div>
           </template>
           <div layout horizontal reverse class="thing-actionbar">
-            <template if="{{enextra}}">
-              <paper-icon-button class="mini" icon="settings-input-composite" on-tap="{{ toggleExtra }}"></paper-icon-button>
-            </template>
-            <template if="{{enshape}}">
-              <paper-icon-button class="mini" icon="view-list" on-tap="{{ toggleCard }}"></paper-icon-button>
-            </template>
-            <template if="{{entoggle}}">
-              <paper-icon-button class="mini" icon="settings-power" on-tap="{{ tapObject }}"></paper-icon-button>
-            </template>
-            <template if="{{ensettings}}">
-              <paper-icon-button class="mini" icon="settings" on-tap="{{ toggleDialog }}" transition="core-transition-center"></paper-icon-button>
-            </template>
+            <template ref="baseButtons" bind></template>
             <content select="buttons"></content>
           </div>
         </div>
       </paper-shadow>
     </template>
 
+    <!-- row -->
     <template if="{{ mode==='row' }}">
       <div layout horizontal self-stretch justified class="row">
         <div>
@@ -215,52 +207,31 @@ Element providing a generic card
         </div>
         <div </div>
           <div layout horizontal>
-            <template if="{{enextra}}">
-              <paper-icon-button class="mini" icon="settings-input-composite" on-tap="{{ toggleExtra }}"></paper-icon-button>
-            </template>
-            <template if="{{enshape}}">
-              <paper-icon-button class="mini" icon="view-list" on-tap="{{ toggleCard }}"></paper-icon-button>
-            </template>
-            <template if="{{entoggle}}">
-              <paper-icon-button class="mini" icon="settings-power" on-tap="{{ tapObject }}"></paper-icon-button>
-            </template>
-            <template if="{{ensettings}}">
-              <paper-icon-button class="mini" icon="settings" on-tap="{{ toggleDialog }}" transition="core-transition-center"></paper-icon-button>
-            </template>
+            <template ref="baseButtons" bind></template>
             <content select="buttons"></content>
           </div>
         </div>
     </template>
 
+    <!-- chip -->
     <template if="{{ mode==='chip' }}">
       <paper-shadow animated z="1" class="chip">
-        <div layout vertical fit>
-          <div layout horizontal flex start style="color:white;background-color: rgba(50, 50, 50, 0.9); text-align:center;">
+        <div layout vertical>
+          <div layout horizontal start style="height:150px;color:white;background-color: rgba(50, 50, 50, 0.9); text-align:center;">
             <div layout vertical flex center>
               <content select="icon"></content>
               <div>
                 <content select="name"></content>
               </div>
-             <!--  <small><content select="description"></content></small> -->
+              <!--  <small><content select="description"></content></small> -->
             </div>
             <div layout end vertical reverse class="thing-actionbar">
-              <template if="{{enextra}}">
-                <paper-icon-button class="mini" icon="settings-input-composite" on-tap="{{ toggleExtra }}"></paper-icon-button>
-              </template>
-              <template if="{{enshape}}">
-                <paper-icon-button class="mini" icon="view-list" on-tap="{{ toggleCard }}"></paper-icon-button>
-              </template>
-              <template if="{{entoggle}}">
-                <paper-icon-button class="mini" icon="settings-power" on-tap="{{ tapObject }}"></paper-icon-button>
-              </template>
-              <template if="{{ensettings}}">
-                <paper-icon-button class="mini" icon="settings" on-tap="{{ toggleDialog }}" transition="core-transition-center"></paper-icon-button>
-              </template>
+              <template ref="baseButtons" bind></template>
               <content select="buttons"></content>
             </div>
           </div>
           <template if="{{extra}}">
-            <div self-stretch id="extra">
+            <div class="extra">
               <content select="extra"></content>
             </div>
           </template>
@@ -275,7 +246,7 @@ Element providing a generic card
       enextra: true,
       entoggle: false,
       ensettings: true,
-      enshape: true,
+      enshape: false,
       tapObject: function(event) {
         this.fire("icon-tap", event);
       },
