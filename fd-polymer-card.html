@@ -82,20 +82,24 @@ Element providing a generic card
       paper-icon-button {
         color: #999;
       }
-      paper-icon-button::shadow core-icon[role=icon] {
-        width: 40px;
-        height: 40px;
+      polyfill-next-selector {
+        content: 'icon paper-icon-button::shadow core-icon[role=img]';
+      }
+      ::content icon paper-icon-button::shadow core-icon[role=img] {
+        width: 80px;
+        height: 80px;
+        color: white;
       }
       paper-icon-button.mini::shadow core-icon[role=img] {
         width: 20px;
         height: 20px;
         color: white;
       }
-      paper-icon-button:hover {
-        color: #555;
+      paper-icon-button:hover::shadow core-icon[role=img] {
+        color: #8bae2d;
       }
-      #moddialog{
-        min-width:200px;
+      #moddialog {
+        min-width: 200px;
       }
     </style>
 
