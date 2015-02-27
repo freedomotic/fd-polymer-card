@@ -1,4 +1,5 @@
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../fd-polymer-i18next-translate/fd-polymer-i18next-translate.html">
 <link rel="import" href="../paper-shadow/paper-shadow.html">
 <link rel="import" href="../paper-button/paper-button.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
@@ -105,8 +106,8 @@ Element providing a generic card
 
     <paper-action-dialog backdrop id="moddialog">
       <content select="modify"></content>
-      <paper-button affirmative raised style="color:white;background-color:#8bae2d;<" on-tap="{{ saveItem }}">{{ 'save' | translate }}</paper-button>
-      <paper-button dismissive style="color:red;">{{ 'close' | translate }}</paper-button>
+      <paper-button affirmative raised style="color:white;background-color:#8bae2d;<" on-tap="{{ saveItem }}">{{ 'save' | t }}</paper-button>
+      <paper-button dismissive style="color:red;">{{ 'close' | t }}</paper-button>
     </paper-action-dialog>
 
     <template id="baseButtons">

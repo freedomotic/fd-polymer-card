@@ -1,6 +1,6 @@
 {
   "name": "fd-polymer-card",
-  "version": "0.5.0",
+  "version": "0.5.2",
   "keywords": [
     "freedomotic",
     "seed",
@@ -9,11 +9,12 @@
   ],
   "main": "fd-polymer-card.html",
   "dependencies": {
-    "polymer": "Polymer/polymer#^0.5.4",
-    "fd-polymer-ispermitted": "~0.1.2"
+    "polymer": "Polymer/polymer#^0.5.5",
+    "fd-polymer-ispermitted": "~0.1.8",
+    "fd-polymer-i18next-traslate": "~0.2.4",
   },
   "devDependencies": {
-    "polymer-test-tools": "Polymer/polymer-test-tools#^0.5.0"
+    "polymer-test-tools": "Polymer/polymer-test-tools#^0.5.5"
   },
   "authors": [
     "Matteo Mazzoni <matteo@bestmazzo.it>",
@@ -30,7 +31,7 @@
     "tests"
   ],
   "resolutions": {
-    "polymer": "^0.5.4",
-    "core-component-page": "^0.5.4"
+    "polymer": "^0.5.5",
+    "core-component-page": "^0.5.5"
   }
 }
