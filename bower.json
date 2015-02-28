@@ -1,6 +1,6 @@
 {
   "name": "fd-polymer-card",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "keywords": [
     "freedomotic",
     "seed",
@@ -10,7 +10,7 @@
   "main": "fd-polymer-card.html",
   "dependencies": {
     "polymer": "Polymer/polymer#^0.5.5",
-    "fd-polymer-ispermitted": "~0.1.8",
+    "fd-polymer-ispermitted": "~0.1.4",
     "fd-polymer-i18next-traslate": "~0.2.4"
   },
   "devDependencies": {
@@ -29,9 +29,5 @@
     "../",
     "test",
     "tests"
-  ],
-  "resolutions": {
-    "polymer": "^0.5.5",
-    "core-component-page": "^0.5.5"
-  }
+  ]
 }
